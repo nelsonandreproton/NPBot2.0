@@ -17,6 +17,36 @@ export class ConversationStore {
     );
   }
 
+  /**
+   * Get conversation history scoped to a specific user.
+   * Each user has their own session history, even in shared channels.
+   */
+  getUserHistory(userId: string, limit: number = 20): StoredMessage[] {
+    const db = getDatabase();
+    const rows = db
+      .prepare(
+        `SELECT role, content, user_id, user_name, timestamp, conversation_id
+         FROM conversations
+         WHERE user_id = ? OR (role = 'assistant' AND conversation_id IN (
+           SELECT DISTINCT conversation_id FROM conversations WHERE user_id = ?
+         ))
+         ORDER BY id DESC
+         LIMIT ?`,
+      )
+      .all(userId, userId, limit) as any[];
+
+    return rows.reverse().map((row) => ({
+      role: row.role,
+      content: row.content,
+      userId: row.user_id ?? undefined,
+      userName: row.user_name ?? undefined,
+      timestamp: row.timestamp,
+    }));
+  }
+
+  /**
+   * Get history for a specific conversation (e.g. for channel context).
+   */
   getHistory(conversationId: string, limit: number = 20): StoredMessage[] {
     const db = getDatabase();
     const rows = db
@@ -43,6 +73,11 @@ export class ConversationStore {
     db.prepare("DELETE FROM conversations WHERE conversation_id = ?").run(
       conversationId,
     );
+  }
+
+  clearUserHistory(userId: string): void {
+    const db = getDatabase();
+    db.prepare("DELETE FROM conversations WHERE user_id = ?").run(userId);
   }
 
   getConversationCount(conversationId: string): number {

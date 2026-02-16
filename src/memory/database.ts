@@ -40,6 +40,12 @@ function initializeSchema(db: Database.Database): void {
     CREATE INDEX IF NOT EXISTS idx_conversations_conv_id
       ON conversations(conversation_id);
 
+    CREATE INDEX IF NOT EXISTS idx_conversations_user_id
+      ON conversations(user_id);
+
+    CREATE INDEX IF NOT EXISTS idx_conversations_user_timestamp
+      ON conversations(user_id, timestamp);
+
     CREATE INDEX IF NOT EXISTS idx_conversations_timestamp
       ON conversations(conversation_id, timestamp);
 

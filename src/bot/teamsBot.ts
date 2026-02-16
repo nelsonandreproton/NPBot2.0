@@ -40,8 +40,9 @@ export class NPBot extends TeamsActivityHandler {
       for (const member of context.activity.membersAdded ?? []) {
         if (member.id !== context.activity.recipient.id) {
           await context.sendActivity(
-            "Hello! I'm your AI assistant. I can help you with emails, files, calendar, and Teams chats. " +
-            "Type anything to get started — I'll ask you to sign in on first use.",
+            "Hey there! I'm NPBot, your Near Partner AI assistant. " +
+            "I can help you with emails, files, calendar, Teams chats, web searches, and more. " +
+            "Just type what you need — I'll ask you to sign in on first use so I can access your Microsoft 365 data securely.",
           );
         }
       }
@@ -83,7 +84,8 @@ export class NPBot extends TeamsActivityHandler {
     const teamId = this.getTeamId(context);
     const channelId = this.getChannelId(context);
 
-    const history = this.conversationStore.getHistory(conversationId, 20);
+    // Per-user session: each user has isolated history, even in shared channels
+    const history = this.conversationStore.getUserHistory(userId, 20);
     const memories = this.memory.recall(userId, cleanText);
 
     // Store the user message
@@ -118,10 +120,11 @@ export class NPBot extends TeamsActivityHandler {
       // Send the final response
       await context.sendActivity(MessageFactory.text(response));
 
-      // Store assistant response
+      // Store assistant response linked to the user's session
       this.conversationStore.addMessage(conversationId, {
         role: "assistant",
         content: response,
+        userId,
         timestamp: new Date().toISOString(),
       });
 
@@ -143,7 +146,7 @@ export class NPBot extends TeamsActivityHandler {
     logger.info({ userId }, "Sign-in verification received");
     await this.authProvider.handleSignInComplete(context, userId);
     await context.sendActivity(
-      "You're signed in! You can now ask me anything about your emails, files, calendar, or chats.",
+      "You're all set! Feel free to ask me anything about your emails, files, calendar, or chats. I'm here to help!",
     );
   }
 
