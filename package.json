@@ -1,0 +1,37 @@
+{
+  "name": "npbot2",
+  "version": "1.0.0",
+  "description": "Microsoft Teams AI Assistant Bot — OpenClaw-inspired, self-hosted",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "tunnel": "npx localtunnel --port 3978 --subdomain npbot"
+  },
+  "keywords": ["teams", "bot", "ai", "ollama", "microsoft-graph"],
+  "license": "Apache-2.0",
+  "dependencies": {
+    "botbuilder": "^4.23.1",
+    "botbuilder-dialogs": "^4.23.1",
+    "botframework-connector": "^4.23.1",
+    "express": "^4.21.0",
+    "@microsoft/microsoft-graph-client": "^3.0.7",
+    "@azure/msal-node": "^2.16.0",
+    "@azure/identity": "^4.5.0",
+    "ollama": "^0.5.12",
+    "@modelcontextprotocol/sdk": "^1.12.1",
+    "better-sqlite3": "^11.7.0",
+    "dotenv": "^16.4.7",
+    "uuid": "^10.0.0",
+    "pino": "^9.6.0"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.0",
+    "tsx": "^4.19.0",
+    "@types/node": "^22.10.0",
+    "@types/express": "^5.0.0",
+    "@types/better-sqlite3": "^7.6.12",
+    "@types/uuid": "^10.0.0"
+  }
+}

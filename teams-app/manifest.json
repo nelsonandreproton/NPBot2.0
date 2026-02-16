@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/en-us/json-schemas/teams/v1.17/MicrosoftTeams.schema.json",
+  "manifestVersion": "1.17",
+  "version": "1.0.0",
+  "id": "{{MICROSOFT_APP_ID}}",
+  "developer": {
+    "name": "NPBot",
+    "websiteUrl": "https://github.com/nelsonandreproton/NPBot2.0",
+    "privacyUrl": "https://github.com/nelsonandreproton/NPBot2.0",
+    "termsOfUseUrl": "https://github.com/nelsonandreproton/NPBot2.0"
+  },
+  "name": {
+    "short": "NPBot",
+    "full": "NPBot — AI Assistant for Microsoft 365"
+  },
+  "description": {
+    "short": "Your AI assistant for emails, files, calendar, and Teams chats",
+    "full": "NPBot is an AI-powered assistant that helps you interact with your Microsoft 365 data through natural language. Ask about your emails, search files, check your calendar, read Teams chats, and more — all from within Teams."
+  },
+  "icons": {
+    "color": "color.png",
+    "outline": "outline.png"
+  },
+  "accentColor": "#5B5FC7",
+  "bots": [
+    {
+      "botId": "{{MICROSOFT_APP_ID}}",
+      "scopes": ["personal", "team", "groupChat"],
+      "supportsFiles": false,
+      "isNotificationOnly": false,
+      "commandLists": [
+        {
+          "scopes": ["personal", "team", "groupChat"],
+          "commands": [
+            {
+              "title": "help",
+              "description": "Show what I can do"
+            },
+            {
+              "title": "emails",
+              "description": "Show my recent unread emails"
+            },
+            {
+              "title": "calendar",
+              "description": "Show my upcoming events"
+            },
+            {
+              "title": "files",
+              "description": "Search my files"
+            },
+            {
+              "title": "search",
+              "description": "Search the web"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "permissions": ["identity", "messageTeamMembers"],
+  "validDomains": [],
+  "webApplicationInfo": {
+    "id": "{{MICROSOFT_APP_ID}}",
+    "resource": "api://botid-{{MICROSOFT_APP_ID}}"
+  }
+}

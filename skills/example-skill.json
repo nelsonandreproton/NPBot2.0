@@ -1,0 +1,23 @@
+{
+  "name": "example",
+  "version": "1.0.0",
+  "description": "Example skill demonstrating the skill format. Delete or modify as needed.",
+  "author": "NPBot",
+  "tools": [
+    {
+      "name": "get_current_time",
+      "description": "Returns the current date and time in ISO format.",
+      "parameters": {
+        "type": "object",
+        "properties": {
+          "timezone": {
+            "type": "string",
+            "description": "IANA timezone (e.g. 'Europe/London'). Defaults to UTC."
+          }
+        },
+        "required": []
+      },
+      "script": "const tz = args.timezone || 'UTC'; const now = new Date(); return { time: now.toLocaleString('en-US', { timeZone: tz }), timezone: tz, iso: now.toISOString() };"
+    }
+  ]
+}

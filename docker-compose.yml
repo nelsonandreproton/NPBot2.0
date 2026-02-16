@@ -1,0 +1,23 @@
+services:
+  npbot:
+    build: .
+    ports:
+      - "3978:3978"
+    env_file:
+      - .env
+    volumes:
+      - ./skills:/app/skills
+      - ./config:/app/config
+      - ./.data:/app/.data
+    restart: unless-stopped
+
+  # Optional: SearXNG for privacy-friendly web search
+  # Uncomment to enable, then set SEARXNG_URL=http://searxng:8080 in .env
+  #
+  # searxng:
+  #   image: searxng/searxng:latest
+  #   ports:
+  #     - "8080:8080"
+  #   volumes:
+  #     - ./config/searxng:/etc/searxng
+  #   restart: unless-stopped
