@@ -1,0 +1,4 @@
+{
+  "$schema": "https://raw.githubusercontent.com/modelcontextprotocol/specification/main/schema/mcp-config.json",
+  "servers": {}
+}
